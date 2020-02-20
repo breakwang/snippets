@@ -1,0 +1,17 @@
+#!/usr/bin/expect
+
+set timeout 10
+
+set pwd xxxxx
+
+set idcs(0) sjz
+set idcs(1) jh
+set idcs(2) qd
+
+for { set index 0 }  { $index < [array size idcs] }  { incr index } {
+    spawn ssh-add ~/.ssh/jumpserver_$idcs($index)_dx.pem
+    expect {
+        "*Enter passphrase*.pem" {send "$pwd\n"}
+    }
+    interact
+}
